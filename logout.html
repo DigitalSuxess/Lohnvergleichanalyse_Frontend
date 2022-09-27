@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>LOGOUT</h1>
+    </div>
+
+    <style>
+      .lenghtAbweichungen {
+        margin: 20px;
+        width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #0081d5;
+        box-shadow: 10px 10px #e6f6ff;
+      }
+
+      .data {
+        max-width: 1000px;
+        width: 90%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        display: grid;
+        background-color: rgb(255, 255, 255);
+        grid-template-columns: repeat(auto-fill, 250px);
+        justify-content: center;
+        grid-gap: 20px;
+        border: 1px solid rgb(236, 236, 236);
+        box-shadow: 0 25px 25px rgb(0 0 0 / 15%);
+        border-radius: 20px;
+      }
+
+      .idtext {
+        margin: 10px 5px;
+        width: 250px;
+        max-height: auto;
+        word-wrap: break-word;
+        color: black;
+        text-decoration: inherit;
+        border-radius: 10px;
+        border: 1px solid rgb(236, 236, 236);
+        box-shadow: 0 8px 8px rgb(0 0 0 / 15%);
+      }
+
+      h4 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        margin: 10px auto;
+        background: #0081d5;
+        height: 20px;
+        left: -10px;
+        border-radius: 15px;
+        border-bottom-left-radius: 0px;
+        color: white;
+      }
+
+      h5 {
+        display: flex;
+        margin: 10px 20px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .lenghtAbweichungen > p {
+        color: white;
+      }
+
+      p {
+        font-family: Inter, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 32px;
+        color: rgb(26, 26, 26);
+        /* padding-top: 16px; */
+        margin: 0px;
+      }
+
+      .lenghtAbweichungen > p {
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <script src="resources/js/vue.js"></script>
+    <script src="resources/js/axios.min.js"></script>
+    <script>
+      const { ipcRenderer } = require("electron");
+
+      const app = Vue.createApp({
+        data() {
+          return {
+            isLoading: false,
+            size: 0,
+            results: [],
+          };
+        },
+        methods: {
+          async getData() {
+            this.isLoading = true;
+            ipcRenderer.on("id", async (e, args) => {
+              console.log(args);
+              try {
+                const resp = await axios.get("http://localhost:4000/" + args);
+                if ((resp.status = 200)) {
+                  this.size = resp.data.result.length;
+                  console.log(resp.data.result);
+                  this.results = resp.data.result;
+                  this.isLoading = false;
+                }
+              } catch (err) {
+                this.isLoading = false;
+                console.log(err);
+              }
+            });
+          },
+        },
+
+        created() {
+          this.getData();
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

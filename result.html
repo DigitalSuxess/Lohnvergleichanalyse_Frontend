@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div v-if="isLoading">Loading...</div>
+      <div class="dataResult" v-else>
+        <div class="infoperson">
+          <h5>Name : {{result.file1.name}}</h5>
+          <h5>Strasse : {{result.file1.strasse}}</h5>
+          <h5>Stadt : {{result.file1.stadt}}</h5>
+          <br />
+        </div>
+        
+          <div v-if="result['diff'].indexOf('Bruttogehalt') !== -1"> <h5>Bruttogehalt Vormonat: {{result.file1['betrag']}} Bruttogehalt Probe Monat: {{result.file2['betrag']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Versicherung') !== -1"> <h5>Versicherung Vormonat: {{result.file1['insurance']}} Versicherung Probe Monat: {{result.file2['insurance']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Bankverbindung') !== -1"> <h5>Bankverbindung Vormonat: {{result.file1['account']}} Bankverbindung Probe Monat: {{result.file2['account']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Steuerklasse') !== -1"> <h5>Steuerklasse Vormonat: {{result.file1['stKlasse']}} Steuerklasse Probe Monat: {{result.file2['stKlasse']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Faktor') !== -1"> <h5>Faktor Vormonat: {{result.file1['faktor']}} Faktor Probe Monat: {{result.file2['faktor']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Auszahlungsbetrag') !== -1"> <h5>Auszahlungsbetrag Vormonat: {{result.file1['auszahlungsBetrag']}} Auszahlungsbetrag Probe Monat: {{result.file2['auszahlungsBetrag']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Nettogehalt') !== -1"> <h5>Nettogehalt Vormonat: {{result.file1['nettoVerdienst']}} Nettogehalt Probe Monat: {{result.file2['nettoVerdienst']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Kinderfreibetrag') !== -1"> <h5>Kinderfreibetrag Vormonat: {{result.file1['kiFrbtr']}} Kinderfreibetrag Probe Monat: {{result.file2['kiFrbtr']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Konfession') !== -1"> <h5>Konfession Vormonat: {{result.file1['konfession']}} Konfession Probe Monat: {{result.file2['konfession']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Freibetragjahrlich') !== -1"> <h5>Freibetragjahrlich Vormonat: {{result.file1['freibetragJahrl']}} Freibetragjahrlich Probe Monat: {{result.file2['freibetragJahrl']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Freibetragmonatlich') !== -1"> <h5>Freibetragmonatlich Vormonat: {{result.file1['freibetragMtl']}} Freibetragmonatlich Probe Monat: {{result.file2['freibetragMtl']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Midijob') !== -1"> <h5>Midijob Vormonat: {{result.file1['midijob']}} Midijob Probe Monat: {{result.file2['midijob']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Kkprozent') !== -1"> <h5>Kkprozent Vormonat: {{result.file1['kkProzent']}} Kkprozent Probe Monat: {{result.file2['kkProzent']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('pgrs') !== -1"> <h5>pgrs Vormonat: {{result.file1['pgrs']}} pgrs Probe Monat: {{result.file2['pgrs']}}</h5> </div>
+          
+          
+        <div class="lohnart">
+          <div class="lohnartVor">
+            <p>Lohnart Vormonat</p>
+            <h5 v-for="data in result.file1.lohnart" :key="data">{{data}}</h5>
+            <h5>Abzüge</h5>
+            <p>Steuerrechtliche Abzüge : {{result.file1.steurlichAbzuge}}</p>
+            <h5>SV-rechtliche Abzüge : {{result.file1.svRechtlicheAbzuge}}</h5>
+            <!-- {{result["diff"].indexOf('Bruttogehalt') !== -1 ? result.file1["betrag"] : "no"}} -->
+            <!-- {{'Bruttogehalt ist nicht da'.indexOf('Bruttogehalt') !== -1 ? <div>"Yes"</div> : <div>"No"</div>}} -->
+          </div>
+          <div class="lohnartPro">
+            <p>Lohnart aktuelle Monat</p>
+            <h5 v-for="data in result.file2.lohnart" :key="data">{{data}}</h5>
+            <h5>Abzüge</h5>
+            <p>Steuerrechtliche Abzüge : {{result.file2.steurlichAbzuge}}</p>
+            <h5>SV-rechtliche Abzüge : {{result.file2.svRechtlicheAbzuge}}</h5>
+            <!-- {{result["diff"].indexOf('Bruttogehalt') !== -1 ? result.file2["betrag"] : "no"}} -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .dataResult {
+        width: 1000px;
+        height: auto;
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(255, 255, 255);
+        /* grid-template-columns: repeat(auto-fill, 250px); */
+        justify-content: center;
+        align-items: center;
+        /* grid-gap: 10px; */
+        border: 1px solid rgb(236, 236, 236);
+        box-shadow: 0 25px 25px rgb(0 0 0 / 15%);
+        border-radius: 20px;
+      }
+
+      .infoperson {
+        margin: 20px;
+        margin-bottom: 10px;
+        padding: 20px;
+        display: grid;
+        /* justify-content: flex-start; */
+        /* flex-direction: column; */
+        /* justify-content: center; */
+        width: 300px;
+        height: 100px;
+        word-wrap: break-word;
+        text-align: justify;
+        background-color: #0081d5;
+        color: white;
+        border-radius: 10px;
+        /* border: 1px solid rgb(236, 236, 236); */
+        box-shadow: 0 15px 15px rgb(0 0 0 / 15%);
+      }
+
+      .lohnart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* background-color: #dadada; */
+        /* box-shadow: 0 15px 15px rgb(0 0 0 / 15%); */
+        color: white;
+        margin: 20px;
+        font-family: "Nunito", sans-serif;
+        /* border-radius: 10px; */
+        padding: 10px;
+      }
+
+      .lohnart div {
+        padding: 20px;
+        color: black;
+        text-align: justify;
+      }
+
+      .lohnartVor {
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 15px 15px rgb(0 0 0 / 15%);
+        margin: 5px;
+        border: 1px solid rgb(236, 236, 236);
+      }
+
+      .lohnart div {
+        padding: 20px;
+        color: black;
+        text-align: justify;
+      }
+
+      .lohnartPro {
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 15px 15px rgb(0 0 0 / 15%);
+        margin: 5px;
+        border: 1px solid rgb(236, 236, 236);
+      }
+
+      .infoperson h5 {
+        text-align: justify;
+        font-family: "Nunito", sans-serif;
+      }
+
+      h5 {
+        margin: 10px auto;
+      }
+    </style>
+    <script src="resources/js/vue.js"></script>
+    <script src="resources/js/axios.min.js"></script>
+    <script src="./config.js"></script>
+    <script>
+      const { ipcRenderer } = require("electron");
+
+      const app = Vue.createApp({
+        data() {
+          return {
+            isLoading: false,
+            result: null,
+          };
+        },
+        methods: {
+          async getData() {
+            this.isLoading = true;
+            ipcRenderer.on("id", async (e, args) => {
+              try {
+                console.log(args);
+                const resp = await axios.get(ip_address + "results/" + args);
+                this.isLoading = false;
+                console.log(resp);
+                if ((resp.status = 200)) {
+                  console.log(resp.data.monthData);
+                  this.result = resp.data.monthData;
+                  console.log(result)
+                }
+              } catch (err) {
+                this.isLoading = false;
+                console.log(err);
+              }
+            });
+          },
+        },
+
+        created() {
+          this.getData();
+        },
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>

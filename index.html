@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="resources/css/bootstrap.css" />
+    <link rel="stylesheet" href="resources/css/bootstrap-icons.css" />
+
+    <script src="resources/js/bootstrap.bundle.js" async></script>
+    <link href="./styles.css" rel="stylesheet" />
+    <title>Lohnabrechnungsvergleich</title>
+  </head>
+  <body>
+    <div id="app">
+      <div v-if="selected==1">
+                          <!-- Login Page -->
+        <div class="login">
+          <div class="login-circle-top"></div>
+          <div class="login-text">PKF</div>
+          <div class="login-container">
+            <div class="aba">Lohnvergleich</div>
+            <div class="card-body">
+              <h4>Bei Ihrem Konto anmelden</h4>
+              <form @submit.prevent="login">
+                <div class="">
+                  <label for="name" class="username-label">Benutzername</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    v-model="username"
+                    required
+                  />
+                </div>
+                <div class="">
+                  <label for="exampleInputPassword1" class="passwort-label"
+                    >Passwort</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                    v-model="password"
+                    required
+                  />
+                </div>
+
+                <div class="text-danger error">&nbsp;{{errorMessage}}</div>
+
+                <div class="text-center" v-if="loginLoading">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+                <button v-else type="submit" class="login-btn">Anmelden</button>
+              </form>
+            </div>
+          </div>
+          <div class="login-losung"><span>
+            © Lohnvergleich · </span>Eine Lösung von Digital Suxess AG</div>
+          <div class="login-circle-bottom"></div>
+        </div>
+      </div>
+
+      <!-- Home Page -->
+      <div class="main" v-else-if="selected==2">
+        <!-- Change Password Modal -->
+        <div v-if="showChangePasswordModal">
+          <transition name="modal">
+            <div class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                      <h5 class="modal-title">Passwort ändern</h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        @click="showChangePasswordModal=false"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="mb-3">
+                          <label for="oldPassword" class="form-label"
+                            >Altes Passwort</label
+                          >
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="oldPassword"
+                            v-model.trim="oldPassword.value"
+                            required
+                            @input="clearInput"
+                          />
+                          <span
+                            v-if="!oldPassword.isValid"
+                            class="text-danger h6"
+                          >
+                            {{oldPassword.error}}
+                          </span>
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label"
+                            >Neues Passwort</label
+                          >
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="newPassword"
+                            v-model.trim="newPassword.value"
+                            required
+                            @input="clearInput"
+                          />
+                          <p v-if="!newPassword.isValid" class="text-danger h6">
+                            {{newPassword.error}}
+                          </p>
+                        </div>
+                        <div class="mb-3">
+                          <label for="exampleInputPassword1" class="form-label"
+                            >Neues Passwort bestätigen</label
+                          >
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="confirmNewPassword"
+                            v-model.trim="confirmNewPassword.value"
+                            required
+                            @input="clearInput"
+                          />
+                          <p
+                            v-if="!confirmNewPassword.isValid"
+                            class="text-danger h6"
+                          >
+                            {{confirmNewPassword.error}}
+                          </p>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-success"
+                        @click="changePassword"
+                      >
+                        Speichern
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        @click="showChangePasswordModal=false"
+                      >
+                        Abbrechen
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
+
+        <!-- Header -->
+        <header class="navbar">
+          <img class="img" src="resources/images/Digital Suxess 3.png" />
+          <h2>Lohnabrechnungsvergleich</h2>
+          <div class="actions">
+            <span @click="showChangePasswordModal = true">
+              <h5 class="change-password">Passwort ändern</h5>
+            </span>
+
+            <!-- Modal -->
+            <div
+              class="modal fade"
+              id="logout"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Log out</h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Wollen Sie sich wirklich ausloggen?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-bs-dismiss="modal"
+                      @click="logout"
+                    >
+                      Ja
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-warning"
+                      data-bs-dismiss="modal"
+                    >
+                      Nein
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <span
+              data-bs-target="#logout"
+              data-bs-toggle="modal"
+              class="d-inline-block"
+              tabindex="0"
+              data-toggle="tooltip"
+              title="Log out"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                fill="currentColor"
+                class="bi bi-box-arrow-in-left"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"
+                />
+              </svg>
+            </span>
+          </div>
+        </header>
+        <div class="container">
+          <h1 class="hcontainer">Wir vergleichen für Sie</h1>
+          <p class="pcontainer">
+            Das umfassende Tool für einen effizienten, schnellen und genauen
+            Vergleich.
+          </p>
+        </div>
+
+        <form class="container1" @submit.prevent="compare">
+          <div class="import">
+            <div class="btn1">
+              <label for="file">Vormonat</label>
+              <input
+                class="btn-import"
+                type="file"
+                id="file1"
+                @change="onFileChange"
+                required
+              />
+            </div>
+            <div class="btn1">
+              <label for="file">Probe Monat</label>
+              <input
+                class="btn-import"
+                type="file"
+                id="file2"
+                @change="onFileChange"
+                required
+              />
+            </div>
+          </div>
+          <p v-if="isLoading">loading...</p>
+          <div v-else>
+            <input class="action" type="submit" value="Vergleichen" />
+          </div>
+        </form>
+
+        <div
+          class="selAbweichungen"
+          v-if="abweichungens && abweichungens.length > 0"
+        >
+          <a
+            v-for="abweichungen in abweichungens"
+            :key="abweichungen"
+            @click="gotoAbweichungen(abweichungen)"
+            style="text-decoration: none"
+            ><div class="selAbweichung">{{ abweichungen }}</div></a
+          >
+        </div>
+        <div class="lenghtAbweichungen">
+          <p v-if="isabweichung">wir haben {{ size }} Abweichungen gefunden</p>
+        </div>
+        <div v-if="isData">
+          <input type="text" class="searchinfo" v-model="search" placeholder="Id oder Name suchen">
+          <div class="data" v-if="informations && informations.length > 0">
+            <a
+              v-for="(info, i) in filteredInformations"
+              :key="i"
+              @click="gotoResult(info.file1.id)"
+              style="text-decoration: none"
+              ><div class="idtext">
+                <h4>{{ info.file1.id }}</h4>
+                <h5>{{ info.file1.name }}</h5>
+                <h5>{{ info.diff }}</h5>
+              </div></a
+            >
+          </div>
+        </div>
+        
+        <!-- Modal of Logout -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        ></div>
+      </div>
+    </div>
+
+    <!-- You can also require other files to run in this process -->
+    <script src="resources/js/vue.js"></script>
+    <script src="resources/js/axios.min.js"></script>
+    <script src="./config.js"></script>
+
+    <script>
+      // const { ipcRenderer } = window.require("electron");
+
+      const { ipcRenderer } = require("electron");
+      const app = Vue.createApp({
+        data() {
+          return {
+            isData: false,
+            isLoading: false,
+            loginLoading: false,
+            changePassordLoading: false,
+            isabweichung: false,
+            file1: null,
+            file2: null,
+            abweichungens: [],
+            search:'',
+            informations: [],
+            size: 0,
+            selected: 1,
+            username: null,
+            password: null,
+            errorMessage: null,
+            oldPassword: {
+              value: "",
+              isValid: true,
+              error: "",
+            },
+            newPassword: {
+              value: "",
+              isValid: true,
+              error: "",
+            },
+            confirmNewPassword: {
+              value: "",
+              isValid: true,
+              error: "",
+            },
+            formIsValid: true,
+            showChangePasswordModal: false,
+          };
+        },
+        methods: {
+          async login() {
+            this.loginLoading = true;
+            try {
+              const resp = await axios.post(ip_address + "loginUserSoftware", {
+                name: this.username,
+                password: this.password,
+              });
+              console.log(this.username + " " + this.password);
+              if (resp.status == 200) {
+                this.selected = 2;
+                this.loginLoading = false;
+                localStorage.setItem("username", this.username);
+                localStorage.setItem("password", this.password);
+                this.username = "";
+                this.password = "";
+                this.errorMessage = "";
+              }
+            } catch (e) {
+              this.errorMessage = "Invalid Username or Password";
+              this.loginLoading = false;
+            }
+          },
+
+          async compare() {
+            this.isLoading = true;
+            try {
+              this.isabweichung = false;
+              let formData = new FormData();
+              formData.append("file1", this.file1[0]);
+              formData.append("file2", this.file2[0]);
+              // console.log(localStorage.getItem("username"));
+              formData.append("username", localStorage.getItem("username"));
+              const resp = await axios.post(ip_address + "compare", formData, {
+                "Content-Type": "multipart/form-data",
+              });
+              // const resp = await axios.post("http://194.163.162.222:8082/api/users/compare", formData, {
+              //   "Content-Type": "multipart/form-data",
+              // });
+              if (resp.status == 200) {
+                console.log(resp)
+                console.log(resp.data.result[2])
+                this.informations = Object.values(resp.data.result[0]);
+                console.log(this.informations)
+                this.size = this.informations.length;
+                this.abweichungens = resp.data.result[2];
+                this.isabweichung = true;
+              }
+            } catch (err) {
+              console.log(err);
+            }
+            this.isLoading = false;
+            this.isData = true;
+          },
+
+          onFileChange(e) {
+            const data = e.target;
+            this[data.id] = data.files;
+          },
+
+          gotoResult(payload) {
+            ipcRenderer.send("openModal", payload);
+          },
+
+          gotoAbweichungen(payload) {
+            ipcRenderer.send("openModalAbweichungen", payload);
+          },
+
+          logout() {
+            this.selected = 1;
+            this.abweichungens = [];
+            this.informations = [];
+            this.size = 0;
+            this.isabweichung = false;
+            this.isData = false;
+          },
+
+          validateForm() {
+            this.formIsValid = true;
+            if (this.oldPassword.value === "") {
+              this.oldPassword.error = "this field cannot be Empty";
+              this.oldPassword.isValid = false;
+              this.formIsValid = false;
+            } else if (
+              this.oldPassword.value !== localStorage.getItem("password")
+            ) {
+              this.oldPassword.error = "Old Password is incorrect";
+              this.oldPassword.isValid = false;
+              this.formIsValid = false;
+            }
+            if (this.newPassword.value === "") {
+              this.newPassword.error = "this field cannot be Empty";
+              this.newPassword.isValid = false;
+              this.formIsValid = false;
+            }
+            if (this.confirmNewPassword.value === "") {
+              this.confirmNewPassword.error = "this field cannot be Empty";
+              this.confirmNewPassword.isValid = false;
+              this.formIsValid = false;
+            } else if (
+              this.newPassword.value !== this.confirmNewPassword.value
+            ) {
+              this.confirmNewPassword.error = "incorrect confirmation password";
+              this.confirmNewPassword.isValid = false;
+              this.formIsValid = false;
+            }
+          },
+
+          async changePassword() {
+            this.validateForm();
+            if (!this.formIsValid) {
+              return;
+            }
+
+            changePassordLoading = true;
+            try {
+              const resp = await axios.post(
+                ip_address + "changePasswordUserSoftware",
+                {
+                  name: localStorage.getItem("username"),
+                  password: this.newPassword.value,
+                }
+              );
+              if (resp.status == 200) {
+                console.log(resp);
+                this.changePassordLoading = false;
+                this.oldPassword = "";
+                this.newPassword = "";
+                this.confirmNewPassword = "";
+                this.showChangePasswordModal = false;
+              }
+            } catch (e) {
+              this.errorMessage = "Invalid Username or Password";
+              // this.changePassordLoading = false;
+            }
+          },
+
+          clearInput(input) {
+            let field = input.target.id;
+            this[input.target.id].isValid = true;
+          },
+        },
+        computed: {
+    filteredInformations () {
+      return this.informations.filter(info => {
+        // console.log(info.file1.name.indexOf(this.search) > -1)
+         return info.file1.id.indexOf(this.search) > -1 || info.file1.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+      })
+    }
+  },
+
+        mounted() {},
+      });
+
+      app.mount("#app");
+    </script>
+  </body>
+</html>
