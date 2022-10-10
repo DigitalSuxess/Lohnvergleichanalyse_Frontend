@@ -541,6 +541,8 @@ h4 {
 .searchinfo{
   margin-top: 5rem;
   margin-bottom: 5rem;
-  display: flex;
-  justify-content: center;
+  align: center;
+  position:relative;
+  left: 43%;
+  
 }
