@@ -15,14 +15,14 @@
                           <!-- Login Page -->
         <div class="login">
           <div class="login-circle-top"></div>
-          <div class="login-text">PKF</div>
+          <!-- <div class="login-text">PKF</div> -->
           <div class="login-container">
             <div class="aba">Lohnvergleich-Autonomio</div>
             <div class="card-body">
               <h4>Bei Ihrem Konto anmelden</h4>
               <form @submit.prevent="login">
                 <div class="">
-                  <label for="name" class="username-label">Benutzername</label>
+                  <label for="name" class="username-label">Email</label>
                   <input
                     type="text"
                     class="form-control"
@@ -371,7 +371,7 @@
             this.loginLoading = true;
             try {
               const resp = await axios.post(ip_address + "loginUserSoftware", {
-                name: this.username,
+                email: this.username,
                 password: this.password,
               });
               console.log(this.username + " " + this.password);

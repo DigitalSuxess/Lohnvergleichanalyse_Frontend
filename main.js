@@ -2,6 +2,7 @@
 const { app, BrowserWindow, globalShortcut, ipcMain } = require("electron");
 const path = require("path");
 let mainWindow, secondaryWindow, abweichungenWindow;
+require("update-electron-app")();
 
 function createWindow() {
   const { screen } = require("electron");
