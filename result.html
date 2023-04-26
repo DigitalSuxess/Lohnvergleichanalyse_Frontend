@@ -13,27 +13,28 @@
         <div class="infoperson">
           <h5>Name : {{result.file1.name}}</h5>
 
+          <h5>Strasse : {{result.file2.Strasse}}</h5>
+
           <h5>Stadt : {{result.file2.stadt}}</h5>
 
-          <h5>Strasse : {{result.file2.Strasse}}</h5>
           <br />
         </div>
         
-          <div v-if="result['diff'].indexOf('Bruttogehalt') !== -1"> <h5>Bruttogehalt Vormonat: {{result.file1['betrag']}} Bruttogehalt Probe Monat: {{result.file2['betrag']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Versicherung') !== -1"> <h5>Versicherung Vormonat: {{result.file1['insurance']}} Versicherung Probe Monat: {{result.file2['insurance']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Bankverbindung') !== -1"> <h5>Bankverbindung Vormonat: {{result.file1['account']}} Bankverbindung Probe Monat: {{result.file2['account']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Steuerklasse') !== -1"> <h5>Steuerklasse Vormonat: {{result.file1['stKlasse']}} Steuerklasse Probe Monat: {{result.file2['stKlasse']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Faktor') !== -1"> <h5>Faktor Vormonat: {{result.file1['faktor']}} Faktor Probe Monat: {{result.file2['faktor']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Auszahlungsbetrag') !== -1"> <h5>Auszahlungsbetrag Vormonat: {{result.file1['auszahlungsBetrag']}} Auszahlungsbetrag Probe Monat: {{result.file2['auszahlungsBetrag']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Nettogehalt') !== -1"> <h5>Nettogehalt Vormonat: {{result.file1['nettoVerdienst']}} Nettogehalt Probe Monat: {{result.file2['nettoVerdienst']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Kinderfreibetrag') !== -1"> <h5>Kinderfrei betrag Vormonat: {{result.file1['kiFrbtr']}} Kinderfrei betrag Probe Monat: {{result.file2['kiFrbtr']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Konfession') !== -1"> <h5>Konfession Vormonat: {{result.file1['konfession']}} Konfession Probe Monat: {{result.file2['konfession']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Freibetragjahrlich') !== -1"> <h5>Freibetrag jahrlich Vormonat: {{result.file1['freibetragJahrl']}} Freibetrag jahrlich Probe Monat: {{result.file2['freibetragJahrl']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Freibetragmonatlich') !== -1"> <h5>Freibetrag monatlich Vormonat: {{result.file1['freibetragMtl']}} Freibetrag monatlich Probe Monat: {{result.file2['freibetragMtl']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Midijob') !== -1"> <h5>Midijob Vormonat: {{result.file1['midijob']}} Midijob Probe Monat: {{result.file2['midijob']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Kkprozent') !== -1"> <h5>Kkprozent Vormonat: {{result.file1['kkProzent']}} Kkprozent Probe Monat: {{result.file2['kkProzent']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('pgrs') !== -1"> <h5>pgrs Vormonat: {{result.file1['pgrs']}} pgrs Probe Monat: {{result.file2['pgrs']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Strasse') !== -1"> <h5>Strasse Vormonat: {{result.file1['Strasse']}} Strasse Probe Monat: {{result.file2['Strasse']}}</h5></div>
+          <div v-if="result['diff'].indexOf('Bruttogehalt') !== -1"> <h5>Bruttogehalt Vormonat: {{result.file1['betrag']}} <span class="space"> | </span> Bruttogehalt Probe Monat: {{result.file2['betrag']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Versicherung') !== -1"> <h5>Versicherung Vormonat: {{result.file1['insurance']}} <span class="space"> | </span> Versicherung Probe Monat: {{result.file2['insurance']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Bankverbindung') !== -1"> <h5>Bankverbindung Vormonat: {{result.file1['account']}} <span class="space"> | </span> Bankverbindung Probe Monat: {{result.file2['account']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Steuerklasse') !== -1"> <h5>Steuerklasse Vormonat: {{result.file1['stKlasse']}} <span class="space"> | </span> Steuerklasse Probe Monat: {{result.file2['stKlasse']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Faktor') !== -1"> <h5>Faktor Vormonat: {{result.file1['faktor']}} <span class="space"> | </span> Faktor Probe Monat: {{result.file2['faktor']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Auszahlungsbetrag') !== -1"> <h5>Auszahlungsbetrag Vormonat: {{result.file1['auszahlungsBetrag']}} <span class="space"> | </span> Auszahlungsbetrag Probe Monat: {{result.file2['auszahlungsBetrag']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Nettogehalt') !== -1"> <h5>Nettogehalt Vormonat: {{result.file1['nettoVerdienst']}} <span class="space"> | </span> Nettogehalt Probe Monat: {{result.file2['nettoVerdienst']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Kinderfreibetrag') !== -1"> <h5>Kinderfreibetrag Vormonat: {{result.file1['kiFrbtr']}} <span class="space"> | </span> Kinderfreibetrag Probe Monat: {{result.file2['kiFrbtr']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Konfession') !== -1"> <h5>Konfession Vormonat: {{result.file1['konfession']}} <span class="space"> | </span> Konfession Probe Monat: {{result.file2['konfession']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Freibetrag_jährlich') !== -1"> <h5>Freibetrag jährlich Vormonat: {{result.file1['freibetragJahrl']}} <span class="space"> | </span> Freibetrag jährlich Probe Monat: {{result.file2['freibetragJahrl']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Freibetrag_monatlich') !== -1"> <h5>Freibetrag monatlich Vormonat: {{result.file1['freibetragMtl']}} <span class="space"> | </span> Freibetrag monatlich Probe Monat: {{result.file2['freibetragMtl']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Midijob') !== -1"> <h5>Midijob Vormonat: {{result.file1['minijob']}} <span class="space"> | </span> Midijob Probe Monat: {{result.file2['minijob']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('KK_Prozent') !== -1"> <h5>KK Prozent Vormonat: {{result.file1['kkProzent']}} <span class="space"> | </span> KK Prozent Probe Monat: {{result.file2['kkProzent']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('pgrs') !== -1"> <h5>pgrs Vormonat: {{result.file1['pgrs']}} <span class="space"> | </span> pgrs Probe Monat: {{result.file2['pgrs']}}</h5> </div>
+          <div v-if="result['diff'].indexOf('Strasse') !== -1"> <h5>Strasse Vormonat: {{result.file1['Strasse']}} <span class="space"> | </span> Strasse Probe Monat: {{result.file2['Strasse']}}</h5></div>
 
 
           
@@ -75,6 +76,14 @@
         border: 1px solid rgb(236, 236, 236);
         box-shadow: 0 25px 25px rgb(0 0 0 / 15%);
         border-radius: 20px;
+      }
+      .space{
+        background: #0081d5;
+        color: #0081d5;
+        width: 2rem;
+        height: 2rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
       }
 
       .infoperson {

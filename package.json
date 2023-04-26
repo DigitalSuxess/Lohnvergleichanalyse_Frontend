@@ -1,5 +1,5 @@
 {
-  "name": "Lohnabrechnungsvergleich",
+  "name": "Autonomio",
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
@@ -23,6 +23,9 @@
     "electron": "^18.2.0"
   },
   "build": {
+    "win": {
+      "icon": "logo_autonomio.png"
+    },
     "extraFiles": [
       "Backend"
     ]

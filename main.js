@@ -11,15 +11,18 @@ const path = require("path");
 let mainWindow, secondaryWindow, abweichungenWindow;
 require("update-electron-app")();
 
+app.disableHardwareAcceleration();
+
 function createWindow() {
   const { screen } = require("electron");
   const primaryDisplay = screen.getPrimaryDisplay();
   const { width, height } = primaryDisplay.workAreaSize;
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    // width: "2000px",
+    // width: "200px",
     // height: "2000px",
-    icon: "DigitalSuxess_Logo_Bild.ico",
+    icon: path.join(__dirname, "logo_autonomio.png"),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
@@ -27,6 +30,7 @@ function createWindow() {
     },
   });
 
+  mainWindow.webContents.openDevTools();
   mainWindow.maximize();
 
   mainWindow.setMenuBarVisibility(false);
@@ -34,8 +38,6 @@ function createWindow() {
   globalShortcut.register("f5", function () {
     mainWindow.reload();
   });
-
-  // mainWindow.webContents.openDevTools();
 
   // and load the index.html of the app.
   mainWindow.loadFile("index.html");
@@ -117,9 +119,9 @@ app.whenReady().then(() => {
   });
 });
 
-setInterval(() => {
-  autoUpdater.checkForUpdates();
-}, 60000);
+// setInterval(() => {
+//   autoUpdater.checkForUpdates();
+// }, 60000);
 
 autoUpdater.on("update-downloaded", (event, releaseNotes, releaseName) => {
   const dialogOpts = {
