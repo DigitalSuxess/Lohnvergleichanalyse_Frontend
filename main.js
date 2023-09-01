@@ -10,7 +10,6 @@ const {
 const path = require("path");
 let mainWindow, secondaryWindow, abweichungenWindow;
 require("update-electron-app")();
-
 app.disableHardwareAcceleration();
 
 function createWindow() {
@@ -20,8 +19,6 @@ function createWindow() {
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    // width: "200px",
-    // height: "2000px",
     icon: path.join(__dirname, "logo_autonomio.png"),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -30,7 +27,6 @@ function createWindow() {
     },
   });
 
-  mainWindow.webContents.openDevTools();
   mainWindow.maximize();
 
   mainWindow.setMenuBarVisibility(false);

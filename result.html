@@ -11,53 +11,273 @@
       <div v-if="isLoading">Loading...</div>
       <div class="dataResult" v-else>
         <div class="infoperson">
+          <h5>Personal-Nr. : {{result.file1.id}}</h5>
           <h5>Name : {{result.file1.name}}</h5>
-
           <h5>Strasse : {{result.file2.Strasse}}</h5>
-
           <h5>Stadt : {{result.file2.stadt}}</h5>
 
           <br />
         </div>
-        
-          <div v-if="result['diff'].indexOf('Bruttogehalt') !== -1"> <h5>Bruttogehalt Vormonat: {{result.file1['betrag']}} <span class="space"> | </span> Bruttogehalt Probe Monat: {{result.file2['betrag']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Versicherung') !== -1"> <h5>Versicherung Vormonat: {{result.file1['insurance']}} <span class="space"> | </span> Versicherung Probe Monat: {{result.file2['insurance']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Bankverbindung') !== -1"> <h5>Bankverbindung Vormonat: {{result.file1['account']}} <span class="space"> | </span> Bankverbindung Probe Monat: {{result.file2['account']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Steuerklasse') !== -1"> <h5>Steuerklasse Vormonat: {{result.file1['stKlasse']}} <span class="space"> | </span> Steuerklasse Probe Monat: {{result.file2['stKlasse']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Faktor') !== -1"> <h5>Faktor Vormonat: {{result.file1['faktor']}} <span class="space"> | </span> Faktor Probe Monat: {{result.file2['faktor']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Auszahlungsbetrag') !== -1"> <h5>Auszahlungsbetrag Vormonat: {{result.file1['auszahlungsBetrag']}} <span class="space"> | </span> Auszahlungsbetrag Probe Monat: {{result.file2['auszahlungsBetrag']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Nettogehalt') !== -1"> <h5>Nettogehalt Vormonat: {{result.file1['nettoVerdienst']}} <span class="space"> | </span> Nettogehalt Probe Monat: {{result.file2['nettoVerdienst']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Kinderfreibetrag') !== -1"> <h5>Kinderfreibetrag Vormonat: {{result.file1['kiFrbtr']}} <span class="space"> | </span> Kinderfreibetrag Probe Monat: {{result.file2['kiFrbtr']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Konfession') !== -1"> <h5>Konfession Vormonat: {{result.file1['konfession']}} <span class="space"> | </span> Konfession Probe Monat: {{result.file2['konfession']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Freibetrag_jährlich') !== -1"> <h5>Freibetrag jährlich Vormonat: {{result.file1['freibetragJahrl']}} <span class="space"> | </span> Freibetrag jährlich Probe Monat: {{result.file2['freibetragJahrl']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Freibetrag_monatlich') !== -1"> <h5>Freibetrag monatlich Vormonat: {{result.file1['freibetragMtl']}} <span class="space"> | </span> Freibetrag monatlich Probe Monat: {{result.file2['freibetragMtl']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Midijob') !== -1"> <h5>Midijob Vormonat: {{result.file1['minijob']}} <span class="space"> | </span> Midijob Probe Monat: {{result.file2['minijob']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('KK_Prozent') !== -1"> <h5>KK Prozent Vormonat: {{result.file1['kkProzent']}} <span class="space"> | </span> KK Prozent Probe Monat: {{result.file2['kkProzent']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('pgrs') !== -1"> <h5>pgrs Vormonat: {{result.file1['pgrs']}} <span class="space"> | </span> pgrs Probe Monat: {{result.file2['pgrs']}}</h5> </div>
-          <div v-if="result['diff'].indexOf('Strasse') !== -1"> <h5>Strasse Vormonat: {{result.file1['Strasse']}} <span class="space"> | </span> Strasse Probe Monat: {{result.file2['Strasse']}}</h5></div>
-
-
+        <div>
           
-          
-        <div class="lohnart">
-          <div class="lohnartVor">
-            <p>Lohnart Vormonat</p>
-            <h5 v-for="data in result.file1.lohnart" :key="data">{{data}}</h5>
-            <h5>Abzüge</h5>
-            <p>Steuerrechtliche Abzüge : {{result.file1.steurlichAbzuge}}</p>
-            <h5>SV-rechtliche Abzüge : {{result.file1.svRechtlicheAbzuge}}</h5>
-            <!-- {{result["diff"].indexOf('Bruttogehalt') !== -1 ? result.file1["betrag"] : "no"}} -->
-            <!-- {{'Bruttogehalt ist nicht da'.indexOf('Bruttogehalt') !== -1 ? <div>"Yes"</div> : <div>"No"</div>}} -->
+          <h3 class="sub-domain">Bereich Personalinfo</h3>
+
+          <div class="top-info">
+            <div> <h5>Steuerklasse Vormonat: {{result.file1['Steuerklasse']}} <span class="space"> | </span> Steuerklasse Probe Monat: <span :style="{color: result.file1['Steuerklasse'] === result.file2['Steuerklasse']  ? 'black': 'red'}">{{result.file2['Steuerklasse']}}</span></h5> </div>
+            <div> <h5>Strasse Vormonat: {{result.file1['Strasse']}} <span class="space"> | </span> Strasse Probe Monat: <span :style="{color: result.file1['Strasse'] === result.file2['Strasse']  ? 'black': 'red'}">{{result.file2['Strasse']}}</span></h5> </div>
+            <div> <h5>Faktor Vormonat: {{result.file1['Faktor']}} <span class="space"> | </span> Faktor Probe Monat: <span :style="{color: result.file1['Faktor'] === result.file2['Faktor']  ? 'black': 'red'}">{{result.file2['Faktor']}}</span></h5> </div>
+            <div> <h5>Kinderfreibetrag Vormonat: {{result.file1['Kinderfreibetrag']}} <span class="space"> | </span> Kinderfreibetrag Probe Monat: <span :style="{color: result.file1['Kinderfreibetrag'] === result.file2['Kinderfreibetrag']  ? 'black': 'red'}">{{result.file2['Kinderfreibetrag']}}</span></h5> </div>
+            <div> <h5>Konfession Vormonat: {{result.file1['Konfession']}} <span class="space"> | </span> Konfession Probe Monat: <span :style="{color: result.file1['Konfession'] === result.file2['Konfession']  ? 'black': 'red'}">{{result.file2['Konfession']}}</span></h5> </div>
+            <div> <h5>Freibetrag jährlich Vormonat: {{result.file1['Freibetrag_jährlich']}} <span class="space"> | </span> Freibetrag jährlich Probe Monat: <span :style="{color: result.file1['Freibetrag_jährlich'] === result.file2['Freibetrag_jährlich']  ? 'black': 'red'}">{{result.file2['Freibetrag_jährlich']}}</span></h5> </div>
+            <div> <h5>Freibetrag monatlich Vormonat: {{result.file1['Freibetrag_monatlich']}} <span class="space"> | </span> Freibetrag monatlich Probe Monat: <span :style="{color: result.file1['Freibetrag_monatlich'] === result.file2['Freibetrag_monatlich']  ? 'black': 'red'}">{{result.file2['Freibetrag_monatlich']}}</span></h5> </div>
+            <div> <h5>DBA Vormonat: {{result.file1['DBA']}} <span class="space"> | </span> DBA Probe Monat: <span :style="{color: result.file1['DBA'] === result.file2['DBA']  ? 'black': 'red'}">{{result.file2['DBA']}}</span></h5> </div>
+            <div> <h5>Midijob Vormonat: {{result.file1['Midijob']}} <span class="space"> | </span> Midijob Probe Monat: <span :style="{color: result.file1['Midijob'] === result.file2['Midijob']  ? 'black': 'red'}">{{result.file2['Midijob']}}</span></h5> </div>
+            <div> <h5>St_Tg Vormonat: {{result.file1['St_Tg']}} <span class="space"> | </span> St_Tg Probe Monat: <span :style="{color: result.file1['St_Tg'] === result.file2['St_Tg']  ? 'black': 'red'}">{{result.file2['St_Tg']}}</span></h5> </div>
+            <div> <h5>Versicherung Vormonat: {{result.file1['Versicherung']}} <span class="space"> | </span> Versicherung Probe Monat: <span :style="{color: result.file1['Versicherung'] === result.file2['Versicherung']  ? 'black': 'red'}">{{result.file2['Versicherung']}}</span></h5> </div>
+            <div> <h5>KK Prozent Vormonat: {{result.file1['KK_Prozent']}} <span class="space"> | </span> KK Prozent Probe Monat: <span :style="{color: result.file1['KK_Prozent'] === result.file2['KK_Prozent']  ? 'black': 'red'}">{{result.file2['KK_Prozent']}}</span></h5> </div>
+            <div> <h5>pgrs Vormonat: {{result.file1['pgrs']}} <span class="space"> | </span> pgrs Probe Monat: <span :style="{color: result.file1['pgrs'] === result.file2['pgrs']  ? 'black': 'red'}">{{result.file2['pgrs']}}</span></h5> </div>
+            <div> <h5>bgrs Vormonat: {{result.file1['bgrs']}} <span class="space"> | </span> bgrs Probe Monat: <span :style="{color: result.file1['bgrs'] === result.file2['bgrs']  ? 'black': 'red'}">{{result.file2['bgrs']}}</span></h5> </div>
+            <div> <h5>Sv_Tg Vormonat: {{result.file1['Sv_Tg']}} <span class="space"> | </span> Sv_Tg Probe Monat: <span :style="{color: result.file1['Sv_Tg'] === result.file2['Sv_Tg']  ? 'black': 'red'}">{{result.file2['Sv_Tg']}}</span></h5> </div>
+            <div> <h5>Eintritt Vormonat: {{result.file1['Eintritt']}} <span class="space"> | </span> Eintritt Probe Monat: <span :style="{color: result.file1['Eintritt'] === result.file2['Eintritt']  ? 'black': 'red'}">{{result.file2['Eintritt']}}</span></h5> </div>
+            <div> <h5>Austritt Vormonat: {{result.file1['Austritt']}} <span class="space"> | </span> Austritt Probe Monat: <span :style="{color: result.file1['Austritt'] === result.file2['Austritt']  ? 'black': 'red'}">{{result.file2['Austritt']}}</span></h5> </div>
+            <div> <h5>abteilungsNr Vormonat: {{result.file1['abteilungsNr']}} <span class="space"> | </span> abteilungsNr Probe Monat: <span :style="{color: result.file1['abteilungsNr'] === result.file2['abteilungsNr']  ? 'black': 'red'}">{{result.file2['abteilungsNr']}}</span></h5> </div>
+            <div> <h5>Wöchenlich_Arbeitzeit Vormonat: {{result.file1['Wöchenlich_Arbeitzeit']}} <span class="space"> | </span> Wöchenlich_Arbeitzeit Probe Monat: <span :style="{color: result.file1['Wöchenlich_Arbeitzeit'] === result.file2['Wöchenlich_Arbeitzeit']  ? 'black': 'red'}">{{result.file2['Wöchenlich_Arbeitzeit']}}</span></h5> </div>
+            <div> <h5>Kostenstelle Vormonat: {{result.file1['Kostenstelle']}} <span class="space"> | </span> Kostenstelle Probe Monat: <span :style="{color: result.file1['Kostenstelle'] === result.file2['Kostenstelle']  ? 'black': 'red'}">{{result.file2['Kostenstelle']}}</span></h5> </div>
           </div>
-          <div class="lohnartPro">
-            <p>Lohnart aktuelle Monat</p>
-            <h5 v-for="data in result.file2.lohnart" :key="data">{{data}}</h5>
-            <h5>Abzüge</h5>
-            <p>Steuerrechtliche Abzüge : {{result.file2.steurlichAbzuge}}</p>
-            <h5>SV-rechtliche Abzüge : {{result.file2.svRechtlicheAbzuge}}</h5>
-            <!-- {{result["diff"].indexOf('Bruttogehalt') !== -1 ? result.file2["betrag"] : "no"}} -->
+
+          <h3 class="sub-domain">Bereich Brutto-Bezüge</h3>
+
+          <div v-if="result['diff'].indexOf('Lohnart') !== -1">
+            <div class="lohnart">
+              <div class="lohnartVor">
+                <p>Lohnart Vormonat</p>
+                <h5 v-for="data in result.file1.Lohnart" :key="data">{{data}}</h5>
+              </div>
+              <div class="lohnartPro">
+                <p>Lohnart aktuelle Monat</p>
+                <h5 v-for="data in result.file2.Lohnart" :key="data"><span class="vormonatcolor">{{data}}</span></h5>
+              </div>
+            </div>
+          </div>
+          <div class="top-info">
+            <div> <h5>GesamtBrutto Vormonat: {{result.file1['GesamtBrutto']}} <span class="space"> | </span> GesamtBrutto Probe Monat: <span :style="{color: result.file1['GesamtBrutto'] === result.file2['GesamtBrutto']  ? 'black': 'red'}">{{result.file2['GesamtBrutto']}}</span></h5> </div>
+          </div>
+          <h3 class="sub-domain">Bereich Steuerversicherung</h3>
+
+          <table class="tablest-sv">
+            <thead>
+              <tr>
+                <th>Steuer_Brutto</th>
+                <th>Lohnsteuer</th>
+                <th>Kirchensteuer</th>
+                <th>Solidaritätszuschlag</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{result.file1['LSteuer_Brutto']}}</td>
+                <td>{{result.file1['LLohnsteuer']}}</td>
+                <td>{{result.file1['LKirchensteuer']}}</td>
+                <td>{{result.file1['LSolidaritätszuschlag']}}</td>
+              </tr>
+              <tr>
+                <td>{{result.file1['SSteuer_Brutto']}}</td>
+                <td>{{result.file1['SLohnsteuer']}}</td>
+                <td>{{result.file1['SKirchensteuer']}}</td>
+                <td>{{result.file1['SSolidaritätszuschlag']}}</td>
+              </tr>
+              <tr>
+                <td>{{result.file1['NSteuer_Brutto']}}</td>
+                <td>{{result.file1['NLohnsteuer']}}</td>
+                <td>{{result.file1['NKirchensteuer']}}</td>
+                <td>{{result.file1['NSolidaritätszuschlag']}}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <table class="tablest-sv">
+            <thead>
+              <tr>
+                <th>Steuer_Brutto</th>
+                <th>Lohnsteuer</th>
+                <th>Kirchensteuer</th>
+                <th>Solidaritätszuschlag</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr>
+                <td>{{result.file2['LSteuer_Brutto']}}</td>
+                <td>{{result.file2['LLohnsteuer']}}</td>
+                <td>{{result.file2['LKirchensteuer']}}</td>
+                <td>{{result.file2['LSolidaritätszuschlag']}}</td>
+              </tr>
+              <tr>
+                <td>{{result.file2['SSteuer_Brutto']}}</td>
+                <td>{{result.file2['SLohnsteuer']}}</td>
+                <td>{{result.file2['SKirchensteuer']}}</td>
+                <td>{{result.file2['SSolidaritätszuschlag']}}</td>
+              </tr>
+              <tr>
+                <td>{{result.file2['NSteuer_Brutto']}}</td>
+                <td>{{result.file2['NLohnsteuer']}}</td>
+                <td>{{result.file2['NKirchensteuer']}}</td>
+                <td>{{result.file2['NSolidaritätszuschlag']}}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+          <div class="top-info">
+            <div> <h5>Steuerlich Abzüge Vormonat: {{result.file1['steuerlicheAbzüge']}} <span class="space"> | </span> Steuerlich Abzüge Probe Monat: <span :style="{color: result.file1['steuerlicheAbzüge'] === result.file2['steuerlicheAbzüge']  ? 'black': 'red'}">{{result.file2['steuerlicheAbzüge']}}</span></h5> </div>
+          </div>
+
+          <!-- sfdgbsf -->
+          <h3 class="sub-domain">Bereich Sozialversicherung</h3>
+
+          <table class="tablest-sv">
+            <thead>
+              <tr>
+                <th>KV_Brutto</th>
+                <th>RV_Brutto</th>
+                <th>AV_Brutto</th>
+                <th>PV_Brutto</th>
+                <th>KV_Beitrag</th>
+                <th>RV_Beitrag</th>
+                <th>AV_Beitrag</th>
+                <th>PV_Beitrag</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr>
+                <td>{{result.file1['KV_Brutto']}}</td>
+                <td>{{result.file1['RV_Brutto']}}</td>
+                <td>{{result.file1['AV_Brutto']}}</td>
+                <td>{{result.file1['PV_Brutto']}}</td>
+                <td>{{result.file1['KV_Beitrag']}}</td>
+                <td>{{result.file1['RV_Beitrag']}}</td>
+                <td>{{result.file1['AV_Beitrag']}}</td>
+                <td>{{result.file1['PV_Beitrag']}}</td>
+              </tr>
+              <tr>
+                <td>{{result.file1['EKV_Brutto']}}</td>
+                <td>{{result.file1['ERV_Brutto']}}</td>
+                <td>{{result.file1['EAV_Brutto']}}</td>
+                <td>{{result.file1['EPV_Brutto']}}</td>
+                <td>{{result.file1['EKV_Beitrag']}}</td>
+                <td>{{result.file1['ERV_Beitrag']}}</td>
+                <td>{{result.file1['EAV_Beitrag']}}</td>
+                <td>{{result.file1['EPV_Beitrag']}}</td>
+              </tr>
+              <tr>
+                <td>{{result.file1['NKV_Brutto']}}</td>
+                <td>{{result.file1['NRV_Brutto']}}</td>
+                <td>{{result.file1['NAV_Brutto']}}</td>
+                <td>{{result.file1['NPV_Brutto']}}</td>
+                <td>{{result.file1['NKV_Beitrag']}}</td>
+                <td>{{result.file1['NRV_Beitrag']}}</td>
+                <td>{{result.file1['NAV_Beitrag']}}</td>
+                <td>{{result.file1['NPV_Beitrag']}}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+
+          <table class="tablest-sv">
+            <thead>
+              <tr>
+                <th>KV_Brutto</th>
+                <th>RV_Brutto</th>
+                <th>AV_Brutto</th>
+                <th>PV_Brutto</th>
+                <th>KV_Beitrag</th>
+                <th>RV_Beitrag</th>
+                <th>AV_Beitrag</th>
+                <th>PV_Beitrag</th>
+              </tr>
+            </thead>
+            
+            <tbody>
+              <tr>
+                <td>{{result.file2['KV_Brutto']}}</td>
+                <td>{{result.file2['RV_Brutto']}}</td>
+                <td>{{result.file2['AV_Brutto']}}</td>
+                <td>{{result.file2['PV_Brutto']}}</td>
+                <td>{{result.file2['KV_Beitrag']}}</td>
+                <td>{{result.file2['RV_Beitrag']}}</td>
+                <td>{{result.file2['AV_Beitrag']}}</td>
+                <td>{{result.file2['PV_Beitrag']}}</td>
+              </tr>
+              <tr>
+                <td>{{result.file2['EKV_Brutto']}}</td>
+                <td>{{result.file2['ERV_Brutto']}}</td>
+                <td>{{result.file2['EAV_Brutto']}}</td>
+                <td>{{result.file2['EPV_Brutto']}}</td>
+                <td>{{result.file2['EKV_Beitrag']}}</td>
+                <td>{{result.file2['ERV_Beitrag']}}</td>
+                <td>{{result.file2['EAV_Beitrag']}}</td>
+                <td>{{result.file2['EPV_Beitrag']}}</td>
+              </tr>
+              <tr>
+                <td>{{result.file2['NKV_Brutto']}}</td>
+                <td>{{result.file2['NRV_Brutto']}}</td>
+                <td>{{result.file2['NAV_Brutto']}}</td>
+                <td>{{result.file2['NPV_Brutto']}}</td>
+                <td>{{result.file2['NKV_Beitrag']}}</td>
+                <td>{{result.file2['NRV_Beitrag']}}</td>
+                <td>{{result.file2['NAV_Beitrag']}}</td>
+                <td>{{result.file2['NPV_Beitrag']}}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+
+          <div class="top-info">
+            <div> <h5>Sv Rechtliche Abzüge Vormonat: {{result.file1['svRechtlicheAbzüge']}} <span class="space"> | </span> Sv Rechtliche Abzüge Probe Monat: <span :style="{color: result.file1['svRechtlicheAbzüge'] === result.file2['svRechtlicheAbzüge']  ? 'black': 'red'}">{{result.file2['svRechtlicheAbzüge']}}</span></h5> </div>
+          </div>
+
+          <!-- <div class="middle-info"> -->
+            <!-- <div v-if="result['diff'].indexOf('Bankverbindung') !== -1"> <h5>Bankverbindung Vormonat: {{result.file1['Bankverbindung']}} <span class="space"> | </span> Bankverbindung Probe Monat: <span class="vormonatcolor">{{result.file2['Bankverbindung']}}</span></h5> </div> -->
+            <!-- <div v-if="result['diff'].indexOf('Steuerklasse') !== -1"> <h5>Steuerklasse Vormonat: {{result.file1['Steuerklasse']}} <span class="space"> | </span> Steuerklasse Probe Monat: <span class="vormonatcolor">{{result.file2['Steuerklasse']}}</span></h5> </div> -->
+            <!-- <div v-if="result['diff'].indexOf('Strasse') !== -1"> <h5>Strasse Vormonat: {{result.file1['Strasse']}} <span class="space"> | </span> Strasse Probe Monat: <span class="vormonatcolor">{{result.file2['Strasse']}}</span></h5></div> -->
+            <!-- <div v-if="result['diff'].indexOf('Wöchenlich_Arbeitzeit') !== -1"> <h5>Wöchenliche Arbeitzeit Vormonat: {{result.file1['Wöchenlich_Arbeitzeit']}} <span class="space"> | </span> Wöchenliche Arbeitzeit Probe Monat: <span class="vormonatcolor">{{result.file2['Wöchenlich_Arbeitzeit']}}</span></h5></div> -->
+            <!-- <div v-if="result['diff'].indexOf('Kostenstelle') !== -1"> <h5>Kostenstelle Vormonat: {{result.file1['Kostenstelle']}} <span class="space"> | </span> Kostenstelle Probe Monat: <span class="vormonatcolor">{{result.file2['Kostenstelle']}}</span></h5></div> -->
+            <!-- <div v-if="result['diff'].indexOf('Steuer_L') !== -1"> <h5>Steuer_L Vormonat: {{result.file1['Steuer_L']}} <span class="space"> | </span> Steuer_L Probe Monat: <span class="vormonatcolor">{{result.file2['Steuer_L']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('Steuer_S') !== -1"> <h5>Steuer_S Vormonat: {{result.file1['Steuer_S']}} <span class="space"> | </span> Steuer_S Probe Monat: <span class="vormonatcolor">{{result.file2['Steuer_S']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('Steuer_N') !== -1"> <h5>Steuer_N Vormonat: {{result.file1['Steuer_N']}} <span class="space"> | </span> Steuer_N Probe Monat: <span class="vormonatcolor">{{result.file2['Steuer_N']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('SV_EV') !== -1"> <h5>SV_EV Vormonat: {{result.file1['SV_EV']}} <span class="space"> | </span> SV_EV Probe Monat: <span class="vormonatcolor">{{result.file2['SV_EV']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('SV_N') !== -1"> <h5>SV_N Vormonat: {{result.file1['SV_N']}} <span class="space"> | </span> SV_N Probe Monat: <span class="vormonatcolor">{{result.file2['SV_N']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('KV_Brutto') !== -1"> <h5>KV_Brutto Vormonat: {{result.file1['KV_Brutto']}}  <span class="space"> | </span> KV_Brutto Probe Monat: <span class="vormonatcolor">{{result.file2['KV_Brutto']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('RV_Brutto') !== -1"> <h5>RV_Brutto Vormonat: {{result.file1['RV_Brutto']}} <span class="space"> | </span> RV_Brutto Probe Monat: <span class="vormonatcolor">{{result.file2['RV_Brutto']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('AV_Brutto') !== -1"> <h5>AV_Brutto Vormonat: {{result.file1['AV_Brutto']}} <span class="space"> | </span> AV_Brutto Probe Monat: <span class="vormonatcolor">{{result.file2['AV_Brutto']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('PV_Brutto') !== -1"> <h5>PV_Brutto Vormonat: {{result.file1['PV_Brutto']}} <span class="space"> | </span> PV_Brutto Probe Monat: <span class="vormonatcolor">{{result.file2['PV_Brutto']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('KV_Beitrag') !== -1"> <h5>KV_Beitrag Vormonat: {{result.file1['KV_Beitrag']}} <span class="space"> | </span> KV_Beitrag Probe Monat: <span class="vormonatcolor">{{result.file2['KV_Beitrag']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('RV_Beitrag') !== -1"> <h5>RV_Beitrag Vormonat: {{result.file1['RV_Beitrag']}} <span class="space"> | </span> RV_Beitrag Probe Monat: <span class="vormonatcolor">{{result.file2['RV_Beitrag']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('AV_Beitrag') !== -1"> <h5>AV_Beitrag Vormonat: {{result.file1['AV_Beitrag']}} <span class="space"> | </span> AV_Beitrag Probe Monat: <span class="vormonatcolor">{{result.file2['AV_Beitrag']}}</span></h5></div>
+            <div v-if="result['diff'].indexOf('PV_Beitrag') !== -1"> <h5>PV_Beitrag Vormonat: {{result.file1['PV_Beitrag']}} <span class="space"> | </span> PV_Beitrag Probe Monat: <span class="vormonatcolor">{{result.file2['PV_Beitrag']}}</span></h5></div> -->
+          <!-- </div> -->
+
+          <h3 class="sub-domain">Bereich Netto-Bezüge/Netto-Abzüge</h3>
+          <div v-if="result['diff'].indexOf('NettoBezügeAbzügeBereich') !== -1">
+            <div class="lohnart">
+              <div class="lohnartVor">
+                <p>NettoBezugeAbzuge Vormonat</p>
+                <h5 v-for="data in result.file1.NettoBezügeAbzügeBereich" :key="data">{{data}}</h5>
+              </div>
+              <div class="lohnartPro">
+                <p>NettoBezugeAbzuge aktuelle Monat</p>
+                <h5 v-for="data in result.file2.NettoBezügeAbzügeBereich" :key="data"><span class="vormonatcolor">{{data}}</span></h5>
+              </div>
+            </div>
+          </div>
+
+          <div class="top-info">
+            <div> <h5>Nettogehalt Vormonat: {{result.file1['Nettogehalt']}} <span class="space"> | </span> Nettogehalt Probe Monat: <span :style="{color: result.file1['Nettogehalt'] === result.file2['Nettogehalt']  ? 'black': 'red'}">{{result.file2['Nettogehalt']}}</span></h5> </div>
+            <div> <h5>Auszahlungsbetrag Vormonat: {{result.file1['Auszahlungsbetrag']}} <span class="space"> | </span> Auszahlungsbetrag Probe Monat: <span :style="{color: result.file1['Auszahlungsbetrag'] === result.file2['Auszahlungsbetrag']  ? 'black': 'red'}">{{result.file2['Auszahlungsbetrag']}}</span></h5> </div>
+            <div> <h5>Bankverbindung Vormonat: {{result.file1['Bankverbindung']}} <span class="space"> | </span> Bankverbindung Probe Monat: <span :style="{color: result.file1['Auszahlungsbetrag'] === result.file2['Bankverbindung']  ? 'black': 'red'}">{{result.file2['Bankverbindung']}}</span></h5> </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -77,6 +297,43 @@
         box-shadow: 0 25px 25px rgb(0 0 0 / 15%);
         border-radius: 20px;
       }
+
+      .sub-domain{
+        text-decoration: underline;
+        color: #012957;       
+        margin-left: 1rem;
+        margin-right: 1rem;
+      }
+
+      .tablest-sv{
+        /* display: flex;
+        justify-content: center;
+        align-items: center; */
+        border-collapse: collapse;
+        min-width: 400px;
+        width: auto;
+        margin: 1rem auto;
+        border: 2px solid #012957;
+      }
+
+      thead tr {
+        background-color: #012957;
+        color: #ffffff;
+        text-align: left;
+      }
+
+      th, td {
+        padding: 5px 8px;
+      }
+
+      tbody tr, td, th {
+        border: 1px solid #ddd
+      }
+
+      tbody tr:nth-child(even){
+        background-color: #f3f3f3;
+      }
+
       .space{
         background: #0081d5;
         color: #0081d5;
@@ -86,26 +343,45 @@
         margin-right: 1rem;
       }
 
+      .vormonatcolor{
+        color: #ff0000eb;
+      }
+
       .infoperson {
         margin: 20px;
         margin-bottom: 10px;
-        padding: 20px;
         display: grid;
-        /* justify-content: flex-start; */
-        /* flex-direction: column; */
-        /* justify-content: center; */
         width: 300px;
-        height: 100px;
+        height: 150px;
         word-wrap: break-word;
-        text-align: justify;
-        background-color: #0081d5;
-        color: white;
-        border-radius: 10px;
-        /* border: 1px solid rgb(236, 236, 236); */
-        box-shadow: 0 15px 15px rgb(0 0 0 / 15%);
+        background-color: #ffffff;
+        color: black;
+        border-left: 6px solid #012957;
+        text-align: center;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      }
+
+      .top-info{
+        background-color: #ffffff;
+        border-bottom: 6px solid #012957;
+        text-align: center;
+        /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
       }
 
       .lohnart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* background-color: #dadada; */
+        /* box-shadow: 0 15px 15px rgb(0 0 0 / 15%); */
+        color: white;
+        margin: 20px;
+        font-family: "Nunito", sans-serif;
+        /* border-radius: 10px; */
+        padding: 10px;
+      }
+
+      .lohnartcompare {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -147,7 +423,6 @@
       }
 
       .infoperson h5 {
-        text-align: justify;
         font-family: "Nunito", sans-serif;
       }
 
@@ -174,13 +449,15 @@
             ipcRenderer.on("id", async (e, args) => {
               try {
                 console.log(args);
-                const resp = await axios.get(ip_address + "results/" + args);
+                const resp = await axios.get(ip_address + "results/" + args, {headers: {
+    'username': localStorage.getItem("username")}
+  });   
                 this.isLoading = false;
                 console.log(resp);
                 if ((resp.status = 200)) {
                   console.log(resp.data.monthData);
                   this.result = resp.data.monthData;
-                  console.log(result)
+                  console.log(this.result)
                 }
               } catch (err) {
                 this.isLoading = false;

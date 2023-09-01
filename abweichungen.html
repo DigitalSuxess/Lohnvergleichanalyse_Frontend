@@ -11,7 +11,7 @@
       <div v-if="isLoading">Loading...</div>
       <div v-else>
         <div class="lenghtAbweichungen">
-          <p>Hier haben wir {{size}}</p>
+          <p>Hier haben wir {{size}} Abweichung(en) bei {{filter}}</p>
         </div>
         <div class="data">
           <a
@@ -23,7 +23,10 @@
             <div class="idtext">
               <h4>{{data.file1.id}}</h4>
               <h5>{{data.file1.name}}</h5>
-              <h5>{{data.diff}}</h5>
+              <h3>{{filter}} Vormonat</h3>
+              <h5>{{data.file1[filter]}}</h5>
+              <h3>{{filter}} Probe Monat</h3>
+              <h5>{{data.file2[filter]}}</h5>
             </div></a>
         </div>
         <div class="vide"></div>
@@ -33,7 +36,7 @@
     <style>
       .lenghtAbweichungen {
         margin: 20px;
-        width: 400px;
+        width: 800px;
         margin-left: auto;
         margin-right: auto;
         background-color: #0081d5;
@@ -58,8 +61,8 @@
 
       .idtext {
         margin: 10px 5px;
-        width: 220px;
-        height: 190px;
+        /* width: 220px;
+        height: 190px; */
         max-height: auto;
         word-wrap: break-word;
         color: black;
@@ -216,6 +219,7 @@
             isLoading: false,
             size: 0,
             results: [],
+            filter: "",
           };
         },
         methods: {
@@ -226,13 +230,19 @@
           async getData() {
             this.isLoading = true;
             ipcRenderer.on("id", async (e, args) => {
-              console.log(args);
+              // console.log(args);
               try {
-                const resp = await axios.get(ip_address + "abweichung/" + args);
+                const resp = await axios.get(ip_address + "abweichung/" + args, {headers: {
+    'username': localStorage.getItem("username")}
+  });
+                // let formData = new FormData();
+                // formData.append("username", localStorage.getItem("username"));
                 if ((resp.status = 200)) {
-                  this.size = resp.data.result.length;
                   console.log(resp.data.result);
+                  this.size = resp.data.result.length;
                   this.results = resp.data.result;
+                  this.filter = resp.data.abweichung;
+                  console.log(this.filter);
                   this.isLoading = false;
                 }
               } catch (err) {
